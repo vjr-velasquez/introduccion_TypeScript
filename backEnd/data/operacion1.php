@@ -11,6 +11,7 @@ class Promedio {
         $this->num3 = $num3;
         $this->calcularPromedio();
     }
+    
     public function calcularPromedio() {
         $this->resultado = ($this->num1 + $this->num2 + $this->num3) / 3;
     }
