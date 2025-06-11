@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción a TypeScript</title>
+    <link rel="stylesheet" href="../css/intro.css">
+</head>
+<body>
+    <div class="parent">
+        <!-- Header principal -->
+        <div class="div1 header">
+            <h1>Introducción a TypeScript</h1>
+            <p>Guía completa para comenzar con TypeScript</p>
+        </div>
+        
+        <!-- ¿Qué es TypeScript? -->
+        <div class="div2 topic-card">
+            <h2>¿Qué es TypeScript?</h2>
+            <p>TypeScript es un superset de JavaScript desarrollado por Microsoft que añade tipado estático opcional al lenguaje.</p>
+            <ul>
+                <li>Compilado a JavaScript puro</li>
+                <li>Tipado estático opcional</li>
+                <li>Orientado a objetos</li>
+                <li>Compatible con JavaScript existente</li>
+            </ul>
+        </div>
+        
+        <!-- Ventajas de TypeScript -->
+        <div class="div3 topic-card">
+            <h2>¿Qué ventajas ofrece TypeScript frente a JavaScript puro?</h2>
+            <ul>
+                <li><strong>Detección temprana de errores:</strong> Encuentra errores en tiempo de compilación</li>
+                <li><strong>Mejor IntelliSense:</strong> Autocompletado y sugerencias mejoradas</li>
+                <li><strong>Refactoring seguro:</strong> Cambios de código más confiables</li>
+                <li><strong>Documentación automática:</strong> Los tipos sirven como documentación</li>
+                <li><strong>Escalabilidad:</strong> Ideal para proyectos grandes</li>
+            </ul>
+        </div>
+        
+        <!-- Extensión de archivos -->
+        <div class="div4 topic-card">
+            <h2>¿Qué extensión de archivo se utiliza para los archivos TypeScript?</h2>
+            <div class="file-extensions">
+                <div class="extension-item">
+                    <code>.ts</code>
+                    <span>Archivos TypeScript estándar</span>
+                </div>
+                <div class="extension-item">
+                    <code>.tsx</code>
+                    <span>Archivos TypeScript con JSX (React)</span>
+                </div>
+                <div class="extension-item">
+                    <code>.d.ts</code>
+                    <span>Archivos de declaración de tipos</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Instalación en VSCode -->
+        <div class="div5 topic-card">
+            <h2>¿Cómo se instala TypeScript en VSCode?</h2>
+            <div class="installation-steps">
+                <h3>Instalación Global:</h3>
+                <code class="command">npm install -g typescript</code>
+                
+                <h3>Instalación Local (proyecto):</h3>
+                <code class="command">npm install --save-dev typescript</code>
+                
+                <h3>Extensiones recomendadas para VSCode:</h3>
+                <ul>
+                    <li>TypeScript Importer</li>
+                    <li>Bracket Pair Colorizer</li>
+                    <li>ESLint</li>
+                    <li>Prettier</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Compilación -->
+        <div class="div6 topic-card">
+            <h2>¿Cómo se compila un archivo TypeScript para convertirlo a JavaScript?</h2>
+            <div class="compilation-methods">
+                <h3>Comando básico:</h3>
+                <code class="command">tsc archivo.ts</code>
+                
+                <h3>Compilar y ejecutar:</h3>
+                <code class="command">tsc archivo.ts && node archivo.js</code>
+                
+                <h3>Modo watch (observar cambios):</h3>
+                <code class="command">tsc archivo.ts --watch</code>
+                
+                <h3>Compilar todo el proyecto:</h3>
+                <code class="command">tsc</code>
+                
+                <h3>Usando ts-node (ejecutar directamente):</h3>
+                <code class="command">npx ts-node archivo.ts</code>
+            </div>
+        </div>
+        
+        <!-- Ejemplo práctico -->
+        <div class="div7 topic-card example">
+            <h2>Ejemplo Práctico</h2>
+            <div class="code-example">
+                <h3>Código TypeScript (ejemplo.ts):</h3>
+                <pre><code>function saludar(nombre: string): string {
+    return `Hola, ${nombre}!`;
+}
+
+const usuario: string = "Ana";
+console.log(saludar(usuario));</code></pre>
+                
+                <h3>Después de compilar con <code>tsc ejemplo.ts</code>:</h3>
+                <pre><code>function saludar(nombre) {
+    return "Hola, " + nombre + "!";
+}
+
+var usuario = "Ana";
+console.log(saludar(usuario));</code></pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

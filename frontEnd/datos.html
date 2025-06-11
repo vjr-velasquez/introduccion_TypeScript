@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipos de datos en TypeScript</title>
+    <link rel="stylesheet" href="../css/datos.css">
+</head>
+<body>
+    <div class="parent">
+        <!-- Header principal -->
+        <div class="div1 header">
+            <h1>Tipos de datos en TypeScript</h1>
+            <p>Domina el sistema de tipos estático de TypeScript</p>
+            <div class="header-icons">
+                <span class="type-icon">📝</span>
+                <span class="type-icon">🔢</span>
+                <span class="type-icon">✅</span>
+                <span class="type-icon">🔤</span>
+            </div>
+        </div>
+        
+        <!-- ¿Cómo se define un tipo de dato en TypeScript? -->
+        <div class="div2 topic-card basic-types">
+            <h2>¿Cómo se define un tipo de dato en TypeScript?</h2>
+            <p>En TypeScript, los tipos se definen usando dos puntos (:) después del nombre de la variable, parámetro o función.</p>
+            
+            <h3>Tipos primitivos básicos:</h3>
+            <div class="code-examples">
+                <div class="type-example">
+                    <h4>String (Cadenas de texto)</h4>
+                    <pre><code>let nombre: string = "Juan";
+let mensaje: string = `Hola ${nombre}`;
+let descripcion: string = 'Desarrollador';</code></pre>
+                </div>
+                
+                <div class="type-example">
+                    <h4>Number (Números)</h4>
+                    <pre><code>let edad: number = 25;
+let precio: number = 99.99;
+let hexadecimal: number = 0xf00d;
+let binario: number = 0b1010;</code></pre>
+                </div>
+                
+                <div class="type-example">
+                    <h4>Boolean (Verdadero/Falso)</h4>
+                    <pre><code>let activo: boolean = true;
+let completado: boolean = false;
+let esMayor: boolean = edad > 18;</code></pre>
+                </div>
+                
+                <div class="type-example">
+                    <h4>Array (Arreglos)</h4>
+                    <pre><code>let numeros: number[] = [1, 2, 3, 4, 5];
+let nombres: Array&lt;string&gt; = ["Ana", "Luis"];
+let mixto: (string | number)[] = ["Juan", 25];</code></pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ¿Qué son los tipos de unión y cómo se declaran? -->
+        <div class="div3 topic-card union-types">
+            <h2>¿Qué son los tipos de unión y cómo se declaran?</h2>
+            <p>Los tipos de unión permiten que una variable pueda ser de varios tipos diferentes, usando el operador <code>|</code> (pipe).</p>
+            
+            <h3>Ejemplos de tipos de unión:</h3>
+            <div class="union-examples">
+                <div class="union-example">
+                    <h4>Unión básica</h4>
+                    <pre><code>let id: string | number;
+id = "ABC123";  // ✅ Válido
+id = 12345;     // ✅ Válido
+// id = true;   // ❌ Error</code></pre>
+                </div>
+                
+                <div class="union-example">
+                    <h4>Función con parámetros de unión</h4>
+                    <pre><code>function formatearId(id: string | number): string {
+    if (typeof id === "string") {
+        return id.toUpperCase();
+    } else {
+        return id.toString().padStart(6, "0");
+    }
+}</code></pre>
+                </div>
+                
+                <div class="union-example">
+                    <h4>Unión con múltiples tipos</h4>
+                    <pre><code>type Estado = "loading" | "success" | "error";
+type Resultado = string | number | boolean | null;
+
+let estadoActual: Estado = "loading";
+let respuesta: Resultado = "Datos cargados";</code></pre>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <strong>💡 Tip:</strong> Usa type guards (typeof, instanceof) para trabajar de forma segura con tipos de unión.
+            </div>
+        </div>
+        
+        <!-- ¿Qué es un tipo literal en TypeScript y para qué se utiliza? -->
+        <div class="div4 topic-card literal-types">
+            <h2>¿Qué es un tipo literal en TypeScript y para qué se utiliza?</h2>
+            <p>Los tipos literales son tipos que representan valores específicos y exactos, no solo categorías generales.</p>
+            
+            <h3>Tipos de literales:</h3>
+            <div class="literal-examples">
+                <div class="literal-example">
+                    <h4>Literales de cadena</h4>
+                    <pre><code>type Direccion = "norte" | "sur" | "este" | "oeste";
+type TamañoCamisa = "XS" | "S" | "M" | "L" | "XL";
+
+let direccion: Direccion = "norte";  // ✅ Válido
+// let direccion: Direccion = "arriba"; // ❌ Error</code></pre>
+                </div>
+                
+                <div class="literal-example">
+                    <h4>Literales numéricos</h4>
+                    <pre><code>type DadoResult = 1 | 2 | 3 | 4 | 5 | 6;
+type CodigoHTTP = 200 | 404 | 500;
+
+function lanzarDado(): DadoResult {
+    return (Math.floor(Math.random() * 6) + 1) as DadoResult;
+}</code></pre>
+                </div>
+                
+                <div class="literal-example">
+                    <h4>Literales booleanos</h4>
+                    <pre><code>type Verdadero = true;
+type Falso = false;
+
+let siempreVerdadero: Verdadero = true;
+// let siempreVerdadero: Verdadero = false; // ❌ Error</code></pre>
+                </div>
+                
+                <div class="literal-example">
+                    <h4>Uso práctico en funciones</h4>
+                    <pre><code>function crearBoton(
+    texto: string,
+    tipo: "primario" | "secundario" | "peligro"
+) {
+    return `&lt;button class="${tipo}"&gt;${texto}&lt;/button&gt;`;
+}
+
+// Uso
+crearBoton("Guardar", "primario");
+crearBoton("Cancelar", "secundario");</code></pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ¿Qué son los tipos enumerados (Enums) y cómo se crean? -->
+        <div class="div5 topic-card enum-types">
+            <h2>¿Qué son los tipos enumerados (Enums) y cómo se crean?</h2>
+            <p>Los Enums permiten definir un conjunto de constantes nombradas, facilitando el trabajo con valores relacionados.</p>
+            
+            <h3>Tipos de Enums:</h3>
+            <div class="enum-examples">
+                <div class="enum-example">
+                    <h4>Enum numérico (por defecto)</h4>
+                    <pre><code>enum DiaSemana {
+    Lunes,      // 0
+    Martes,     // 1
+    Miercoles,  // 2
+    Jueves,     // 3
+    Viernes,    // 4
+    Sabado,     // 5
+    Domingo     // 6
+}
+
+let hoy: DiaSemana = DiaSemana.Lunes;
+console.log(hoy); // Output: 0</code></pre>
+                </div>
+                
+                <div class="enum-example">
+                    <h4>Enum con valores personalizados</h4>
+                    <pre><code>enum CodigoEstado {
+    OK = 200,
+    NoEncontrado = 404,
+    ErrorServidor = 500
+}
+
+enum Colores {
+    Rojo = "#FF0000",
+    Verde = "#00FF00",
+    Azul = "#0000FF"
+}</code></pre>
+                </div>
+                
+                <div class="enum-example">
+                    <h4>Enum de cadenas</h4>
+                    <pre><code>enum TipoUsuario {
+    ADMIN = "administrador",
+    EDITOR = "editor",
+    VIEWER = "visualizador"
+}
+
+function verificarPermisos(tipo: TipoUsuario) {
+    switch (tipo) {
+        case TipoUsuario.ADMIN:
+            return "Acceso completo";
+        case TipoUsuario.EDITOR:
+            return "Puede editar";
+        case TipoUsuario.VIEWER:
+            return "Solo lectura";
+    }
+}</code></pre>
+                </div>
+                
+                <div class="enum-example">
+                    <h4>Enum constante (const enum)</h4>
+                    <pre><code>const enum Direcciones {
+    Arriba = "UP",
+    Abajo = "DOWN",
+    Izquierda = "LEFT",
+    Derecha = "RIGHT"
+}
+
+// Se optimiza en tiempo de compilación
+let mover = Direcciones.Arriba; // Se convierte a "UP"</code></pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ¿Cómo se define un tipo alias y cuándo es útil? -->
+        <div class="div6 topic-card type-alias">
+            <h2>¿Cómo se define un tipo alias y cuándo es útil?</h2>
+            <p>Los type alias permiten crear nombres personalizados para tipos existentes o combinaciones complejas de tipos.</p>
+            
+            <h3>Casos de uso de Type Alias:</h3>
+            <div class="alias-examples">
+                <div class="alias-example">
+                    <h4>Alias para tipos primitivos</h4>
+                    <pre><code>type ID = string | number;
+type Nombre = string;
+type Edad = number;
+
+let usuarioId: ID = "user123";
+let nombreCompleto: Nombre = "Ana García";
+let añosVida: Edad = 28;</code></pre>
+                </div>
+                
+                <div class="alias-example">
+                    <h4>Alias para objetos complejos</h4>
+                    <pre><code>type Usuario = {
+    id: ID;
+    nombre: string;
+    email: string;
+    activo: boolean;
+    fechaRegistro: Date;
+};
+
+type Producto = {
+    codigo: string;
+    nombre: string;
+    precio: number;
+    categoria: "electronica" | "ropa" | "hogar";
+};</code></pre>
+                </div>
+                
+                <div class="alias-example">
+                    <h4>Alias para funciones</h4>
+                    <pre><code>type EventHandler = (evento: string, datos: any) => void;
+type Calculadora = (a: number, b: number) => number;
+type Validador&lt;T&gt; = (valor: T) => boolean;
+
+const manejarClick: EventHandler = (evento, datos) => {
+    console.log(`Evento: ${evento}`, datos);
+};
+
+const sumar: Calculadora = (a, b) => a + b;</code></pre>
+                </div>
+                
+                <div class="alias-example">
+                    <h4>Alias genéricos</h4>
+                    <pre><code>type Respuesta&lt;T&gt; = {
+    exitoso: boolean;
+    datos: T;
+    mensaje: string;
+};
+
+type ListaPaginada&lt;T&gt; = {
+    elementos: T[];
+    total: number;
+    pagina: number;
+    limite: number;
+};
+
+// Uso
+type RespuestaUsuarios = Respuesta&lt;Usuario[]&gt;;
+type ProductosPaginados = ListaPaginada&lt;Producto&gt;;</code></pre>
+                </div>
+            </div>
+            
+            <div class="when-to-use">
+                <h3>¿Cuándo usar Type Alias?</h3>
+                <ul>
+                    <li><strong>Simplificar tipos complejos:</strong> Hacer código más legible</li>
+                    <li><strong>Reutilización:</strong> Evitar repetir definiciones de tipos</li>
+                    <li><strong>Documentación:</strong> Dar nombres descriptivos a tipos</li>
+                    <li><strong>Mantenimiento:</strong> Cambiar un tipo en un solo lugar</li>
+                    <li><strong>APIs consistentes:</strong> Estandarizar estructuras de datos</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Ejemplo práctico integral -->
+        <div class="div7 topic-card practical-example">
+            <h2>🚀 Ejemplo Práctico: Sistema de Gestión de Tareas</h2>
+            <p>Combinando todos los conceptos de tipos en un ejemplo real:</p>
+            
+            <div class="full-example">
+                <pre><code>// Type Aliases
+type ID = string | number;
+type FechaTarea = Date | string;
+
+// Enum para prioridades
+enum Prioridad {
+    BAJA = "baja",
+    MEDIA = "media",
+    ALTA = "alta",
+    CRITICA = "critica"
+}
+
+// Tipos literales para estados
+type EstadoTarea = "pendiente" | "en_progreso" | "completada" | "cancelada";
+
+// Interface principal
+type Tarea = {
+    id: ID;
+    titulo: string;
+    descripcion: string;
+    prioridad: Prioridad;
+    estado: EstadoTarea;
+    fechaCreacion: FechaTarea;
+    fechaVencimiento?: FechaTarea; // Opcional
+    asignadoA: string | null;
+    etiquetas: string[];
+};
+
+// Tipos de unión para filtros
+type FiltroTarea = {
+    estado?: EstadoTarea;
+    prioridad?: Prioridad;
+    asignadoA?: string;
+};
+
+// Función con tipos definidos
+function crearTarea(
+    titulo: string,
+    descripcion: string,
+    prioridad: Prioridad = Prioridad.MEDIA
+): Tarea {
+    return {
+        id: Date.now().toString(),
+        titulo,
+        descripcion,
+        prioridad,
+        estado: "pendiente",
+        fechaCreacion: new Date(),
+        asignadoA: null,
+        etiquetas: []
+    };
+}
+
+// Uso del sistema
+const miTarea = crearTarea(
+    "Implementar autenticación",
+    "Crear sistema de login con JWT",
+    Prioridad.ALTA
+);
+
+console.log(miTarea);</code></pre>
+            </div>
+            
+            <div class="example-benefits">
+                <h3>✨ Beneficios de este enfoque:</h3>
+                <ul>
+                    <li><strong>Type Safety:</strong> Previene errores en tiempo de compilación</li>
+                    <li><strong>IntelliSense:</strong> Autocompletado y sugerencias precisas</li>
+                    <li><strong>Documentación:</strong> Los tipos actúan como documentación viva</li>
+                    <li><strong>Refactoring:</strong> Cambios seguros y consistentes</li>
+                    <li><strong>Mantenibilidad:</strong> Código más fácil de entender y modificar</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
