@@ -1,0 +1,23 @@
+# Proyecto TypeScript y PHP
+
+## Introducción
+
+Este proyecto es una colección de ejemplos y ejercicios prácticos que integran **TypeScript** en el frontend y **PHP** en el backend. Su objetivo es mostrar cómo se pueden resolver distintos problemas de lógica y matemáticas usando programación orientada a objetos en PHP, así como conceptos clave de TypeScript como tipos alias y estructuras modernas.
+
+Incluye formularios web para interactuar con el usuario, procesamiento de datos en el servidor y visualización de resultados en tiempo real. Es ideal para estudiantes o desarrolladores que desean aprender y practicar la integración de tecnologías modernas en el desarrollo web.
+
+## Estructura
+
+- `/frontEnd`: Ejemplos y explicaciones de TypeScript.
+- `/backEnd`: Ejercicios resueltos con PHP orientado a objetos.
+- `readme`: Este archivo de introducción y guía.
+
+## ¿Cómo usarlo?
+
+1. Clona o descarga el repositorio.
+2. Coloca la carpeta en tu servidor local (por ejemplo, XAMPP).
+3. Accede a los archivos HTML y PHP desde tu navegador para probar los ejemplos.
+
+---
+
+¡Explora el código y aprende practicando!
