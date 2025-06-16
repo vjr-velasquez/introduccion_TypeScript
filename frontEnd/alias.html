@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de TypeScript - Tipos Alias y Funciones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-tab:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .nav-tab.active {
+            color: #007bff;
+            background: white;
+        }
+
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #007bff;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 2.2rem;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #34495e;
+            margin: 30px 0 15px 0;
+            font-size: 1.4rem;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            position: relative;
+            overflow-x: auto;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .code-block::before {
+            content: 'TypeScript';
+            position: absolute;
+            top: 8px;
+            right: 15px;
+            background: #3182ce;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .keyword { color: #ff79c6; }
+        .string { color: #f1fa8c; }
+        .number { color: #bd93f9; }
+        .comment { color: #6272a4; font-style: italic; }
+        .function { color: #50fa7b; }
+        .type { color: #8be9fd; }
+
+        .example-box {
+            background: #f8f9fa;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .interactive-demo {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px dashed #6c757d;
+        }
+
+        .demo-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+            margin: 10px 5px;
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .output {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            min-height: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TypeScript Avanzado</h1>
+            <p class="subtitle">Tipos Alias, Funciones y Mejores Prácticas</p>
+        </header>
+
+        <div class="content">
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="openTab(event, 'tipos-alias')">Tipos Alias</button>
+                <button class="nav-tab" onclick="openTab(event, 'funciones')">Funciones con Tipos</button>
+                <button class="nav-tab" onclick="openTab(event, 'parametros')">Parámetros</button>
+                <button class="nav-tab" onclick="openTab(event, 'buenas-practicas')">Mejores Prácticas</button>
+            </div>
+
+            <div id="tipos-alias" class="tab-content active">
+                <h2>Tipos Alias en TypeScript</h2>
+                
+                <p>Los <span class="highlight">tipos alias</span> permiten crear nombres personalizados para tipos existentes, haciendo el código más legible y reutilizable.</p>
+
+                <h3>¿Cómo se define un tipo alias?</h3>
+                <p>Se utiliza la palabra clave <code>type</code> seguida del nombre del alias:</p>
+
+                <div class="code-block">
+<span class="comment">// Alias para tipos primitivos</span>
+<span class="keyword">type</span> <span class="type">ID</span> = <span class="keyword">string</span> | <span class="keyword">number</span>;
+<span class="keyword">type</span> <span class="type">UserName</span> = <span class="keyword">string</span>;
+
+<span class="comment">// Alias para objetos</span>
+<span class="keyword">type</span> <span class="type">Usuario</span> = {
+  id: <span class="type">ID</span>;
+  nombre: <span class="type">UserName</span>;
+  email: <span class="keyword">string</span>;
+  activo: <span class="keyword">boolean</span>;
+};
+
+<span class="comment">// Alias para arrays</span>
+<span class="keyword">type</span> <span class="type">ListaUsuarios</span> = <span class="type">Usuario</span>[];
+                </div>
+
+                <div class="example-box">
+                    <h3>Ejemplo Práctico</h3>
+                    <div class="code-block">
+<span class="keyword">type</span> <span class="type">EstadoPedido</span> = <span class="string">'pendiente'</span> | <span class="string">'procesando'</span> | <span class="string">'enviado'</span> | <span class="string">'entregado'</span>;
+
+<span class="keyword">type</span> <span class="type">Pedido</span> = {
+  id: <span class="keyword">number</span>;
+  cliente: <span class="keyword">string</span>;
+  estado: <span class="type">EstadoPedido</span>;
+  total: <span class="keyword">number</span>;
+};
+
+<span class="keyword">const</span> pedido: <span class="type">Pedido</span> = {
+  id: <span class="number">1</span>,
+  cliente: <span class="string">"Juan Pérez"</span>,
+  estado: <span class="string">"procesando"</span>,
+  total: <span class="number">299.99</span>
+};
+                    </div>
+                </div>
+
+                <h3>¿Cuándo es útil usar tipos alias?</h3>
+                <ul>
+                    <li><strong>Tipos complejos repetitivos:</strong> Evita duplicar definiciones largas</li>
+                    <li><strong>Union types:</strong> Simplifica tipos con múltiples opciones</li>
+                    <li><strong>Documentación:</strong> Los nombres descriptivos mejoran la legibilidad</li>
+                    <li><strong>Mantenimiento:</strong> Cambios centralizados en un solo lugar</li>
+                    <li><strong>Reutilización:</strong> Usa el mismo tipo en múltiples lugares</li>
+                </ul>
+
+                <div class="tip-box">
+                    <h3>💡 Consejo</h3>
+                    <p>Usa nombres descriptivos para tus tipos alias. En lugar de <code>type T = string</code>, usa <code>type Email = string</code> para mayor claridad.</p>
+                </div>
+            </div>
+
+            <div id="funciones" class="tab-content">
+                <h2>Funciones con Tipos en TypeScript</h2>
+                
+                <p>TypeScript permite <span class="highlight">tipar funciones</span> de manera explícita, especificando tipos para parámetros y valores de retorno.</p>
+
+                <h3>Sintaxis Básica</h3>
+                <div class="code-block">
+<span class="comment">// Función con tipos explícitos</span>
+<span class="keyword">function</span> <span class="function">sumar</span>(a: <span class="keyword">number</span>, b: <span class="keyword">number</span>): <span class="keyword">number</span> {
+  <span class="keyword">return</span> a + b;
+}
+
+<span class="comment">// Función arrow con tipos</span>
+<span class="keyword">const</span> <span class="function">multiplicar</span> = (x: <span class="keyword">number</span>, y: <span class="keyword">number</span>): <span class="keyword">number</span> => x * y;
+
+<span class="comment">// Función sin retorno (void)</span>
+<span class="keyword">function</span> <span class="function">mostrarMensaje</span>(mensaje: <span class="keyword">string</span>): <span class="keyword">void</span> {
+  console.log(mensaje);
+}
+                </div>
+
+                <h3>Tipos de Función</h3>
+                <div class="code-block">
+<span class="comment">// Definir tipo de función</span>
+<span class="keyword">type</span> <span class="type">OperacionMatematica</span> = (a: <span class="keyword">number</span>, b: <span class="keyword">number</span>) => <span class="keyword">number</span>;
+
+<span class="comment">// Usar el tipo</span>
+<span class="keyword">const</span> <span class="function">restar</span>: <span class="type">OperacionMatematica</span> = (x, y) => x - y;
+<span class="keyword">const</span> <span class="function">dividir</span>: <span class="type">OperacionMatematica</span> = (x, y) => x / y;
+                </div>
+
+                <div class="example-box">
+                    <h3>Ejemplo Avanzado</h3>
+                    <div class="code-block">
+<span class="keyword">type</span> <span class="type">Usuario</span> = {
+  id: <span class="keyword">number</span>;
+  nombre: <span class="keyword">string</span>;
+  email: <span class="keyword">string</span>;
+};
+
+<span class="keyword">type</span> <span class="type">FiltroUsuarios</span> = (usuarios: <span class="type">Usuario</span>[], criterio: <span class="keyword">string</span>) => <span class="type">Usuario</span>[];
+
+<span class="keyword">const</span> <span class="function">filtrarPorNombre</span>: <span class="type">FiltroUsuarios</span> = (usuarios, criterio) => {
+  <span class="keyword">return</span> usuarios.filter(usuario => 
+    usuario.nombre.toLowerCase().includes(criterio.toLowerCase())
+  );
+};
+                    </div>
+                </div>
+
+                <div class="interactive-demo">
+                    <h3>Demo Interactiva</h3>
+                    <p>Prueba diferentes tipos de funciones:</p>
+                    <button class="demo-button" onclick="demoFuncionBasica()">Función Básica</button>
+                    <button class="demo-button" onclick="demoFuncionCompleja()">Función Compleja</button>
+                    <div class="output" id="output-funciones"></div>
+                </div>
+            </div>
+
+            <div id="parametros" class="tab-content">
+                <h2>Parámetros Opcionales y Predeterminados</h2>
+                
+                <h3>Parámetros Opcionales</h3>
+                <p>Se marcan con <span class="highlight">?</span> después del nombre del parámetro:</p>
+
+                <div class="code-block">
+<span class="comment">// Parámetro opcional</span>
+<span class="keyword">function</span> <span class="function">saludar</span>(nombre: <span class="keyword">string</span>, apellido?: <span class="keyword">string</span>): <span class="keyword">string</span> {
+  <span class="keyword">if</span> (apellido) {
+    <span class="keyword">return</span> <span class="string">`Hola, ${nombre} ${apellido}!`</span>;
+  }
+  <span class="keyword">return</span> <span class="string">`Hola, ${nombre}!`</span>;
+}
+
+<span class="comment">// Uso</span>
+console.log(<span class="function">saludar</span>(<span class="string">"Ana"</span>)); <span class="comment">// "Hola, Ana!"</span>
+console.log(<span class="function">saludar</span>(<span class="string">"Ana"</span>, <span class="string">"García"</span>)); <span class="comment">// "Hola, Ana García!"</span>
+                </div>
+
+                <h3>Parámetros Predeterminados</h3>
+                <p>Se asigna un valor por defecto al parámetro:</p>
+
+                <div class="code-block">
+<span class="comment">// Parámetros con valores predeterminados</span>
+<span class="keyword">function</span> <span class="function">crearUsuario</span>(
+  nombre: <span class="keyword">string</span>,
+  edad: <span class="keyword">number</span> = <span class="number">18</span>,
+  activo: <span class="keyword">boolean</span> = <span class="keyword">true</span>
+): <span class="keyword">string</span> {
+  <span class="keyword">return</span> <span class="string">`Usuario: ${nombre}, Edad: ${edad}, Activo: ${activo}`</span>;
+}
+
+<span class="comment">// Diferentes formas de llamar la función</span>
+console.log(<span class="function">crearUsuario</span>(<span class="string">"Pedro"</span>));
+console.log(<span class="function">crearUsuario</span>(<span class="string">"María"</span>, <span class="number">25</span>));
+console.log(<span class="function">crearUsuario</span>(<span class="string">"Carlos"</span>, <span class="number">30</span>, <span class="keyword">false</span>));
+                </div>
+
+                <div class="warning-box">
+                    <h3>⚠️ Importante</h3>
+                    <p>Los parámetros opcionales deben ir siempre después de los parámetros obligatorios.</p>
+                </div>
+
+                <h3>Combinando Opcionales y Predeterminados</h3>
+                <div class="code-block">
+<span class="keyword">type</span> <span class="type">ConfiguracionAPI</span> = {
+  url: <span class="keyword">string</span>;
+  timeout?: <span class="keyword">number</span>;
+  retries?: <span class="keyword">number</span>;
+};
+
+<span class="keyword">function</span> <span class="function">llamarAPI</span>(
+  config: <span class="type">ConfiguracionAPI</span>,
+  metodo: <span class="keyword">string</span> = <span class="string">"GET"</span>,
+  headers?: Record<<span class="keyword">string</span>, <span class="keyword">string</span>>
+): <span class="keyword">Promise</span><<span class="keyword">any</span>> {
+  <span class="keyword">const</span> configuracion = {
+    timeout: <span class="number">5000</span>,
+    retries: <span class="number">3</span>,
+    ...config
+  };
+  
+  <span class="comment">// Lógica de la llamada API...</span>
+  <span class="keyword">return</span> <span class="keyword">Promise</span>.resolve(<span class="string">`${metodo} a ${configuracion.url}`</span>);
+}
+                </div>
+
+                <div class="interactive-demo">
+                    <h3>Demo de Parámetros</h3>
+                    <button class="demo-button" onclick="demoParametrosOpcionales()">Parámetros Opcionales</button>
+                    <button class="demo-button" onclick="demoParametrosPredeterminados()">Parámetros Predeterminados</button>
+                    <div class="output" id="output-parametros"></div>
+                </div>
+            </div>
+
+            <div id="buenas-practicas" class="tab-content">
+                <h2>Mejores Prácticas para TypeScript</h2>
+                
+                <h3>1. Nomenclatura y Organización</h3>
+                <div class="code-block">
+<span class="comment">// ✅ Buenos nombres de tipos</span>
+<span class="keyword">type</span> <span class="type">UserProfile</span> = { ... };
+<span class="keyword">type</span> <span class="type">PaymentStatus</span> = <span class="string">'pending'</span> | <span class="string">'completed'</span> | <span class="string">'failed'</span>;
+
+<span class="comment">// ❌ Nombres confusos</span>
+<span class="keyword">type</span> <span class="type">T</span> = { ... };
+<span class="keyword">type</span> <span class="type">Data</span> = <span class="keyword">string</span> | <span class="keyword">number</span>;
+                </div>
+
+                <h3>2. Usa Tipos Estrictos</h3>
+                <div class="code-block">
+<span class="comment">// ✅ Tipos específicos</span>
+<span class="keyword">type</span> <span class="type">HttpMethod</span> = <span class="string">'GET'</span> | <span class="string">'POST'</span> | <span class="string">'PUT'</span> | <span class="string">'DELETE'</span>;
+
+<span class="keyword">interface</span> <span class="type">ApiResponse</span><<span class="type">T</span>> {
+  data: <span class="type">T</span>;
+  status: <span class="keyword">number</span>;
+  message: <span class="keyword">string</span>;
+}
+
+<span class="comment">// ❌ Tipos muy amplios</span>
+<span class="keyword">function</span> <span class="function">procesarDatos</span>(datos: <span class="keyword">any</span>): <span class="keyword">any</span> {
+  <span class="comment">// Evita usar 'any'</span>
+}
+                </div>
+
+                <h3>3. Interfaces vs Type Aliases</h3>
+                <div class="code-block">
+<span class="comment">// ✅ Usa interfaces para objetos que pueden extenderse</span>
+<span class="keyword">interface</span> <span class="type">BaseEntity</span> {
+  id: <span class="keyword">string</span>;
+  createdAt: <span class="keyword">Date</span>;
+}
+
+<span class="keyword">interface</span> <span class="type">User</span> <span class="keyword">extends</span> <span class="type">BaseEntity</span> {
+  name: <span class="keyword">string</span>;
+  email: <span class="keyword">string</span>;
+}
+
+<span class="comment">// ✅ Usa type para uniones y alias</span>
+<span class="keyword">type</span> <span class="type">Theme</span> = <span class="string">'light'</span> | <span class="string">'dark'</span>;
+<span class="keyword">type</span> <span class="type">EventHandler</span> = (event: <span class="keyword">Event</span>) => <span class="keyword">void</span>;
+                </div>
+
+                <h3>4. Utiliza Genéricos Apropiadamente</h3>
+                <div class="code-block">
+<span class="comment">// ✅ Función genérica reutilizable</span>
+<span class="keyword">function</span> <span class="function">crearArray</span><<span class="type">T</span>>(item: <span class="type">T</span>, cantidad: <span class="keyword">number</span>): <span class="type">T</span>[] {
+  <span class="keyword">return</span> <span class="keyword">new</span> Array(cantidad).fill(item);
+}
+
+<span class="keyword">const</span> numeros = <span class="function">crearArray</span>(<span class="number">0</span>, <span class="number">5</span>); <span class="comment">// number[]</span>
+<span class="keyword">const</span> textos = <span class="function">crearArray</span>(<span class="string">"hola"</span>, <span class="number">3</span>); <span class="comment">// string[]</span>
+                </div>
+
+                <h3>5. Manejo de Errores y Null Safety</h3>
+                <div class="code-block">
+<span class="comment">// ✅ Tipos que pueden ser null/undefined</span>
+<span class="keyword">function</span> <span class="function">buscarUsuario</span>(id: <span class="keyword">string</span>): <span class="type">User</span> | <span class="keyword">null</span> {
+  <span class="comment">// Lógica de búsqueda...</span>
+  <span class="keyword">return</span> <span class="keyword">null</span>; <span class="comment">// Usuario no encontrado</span>
+}
+
+<span class="comment">// ✅ Verificación antes de uso</span>
+<span class="keyword">const</span> usuario = <span class="function">buscarUsuario</span>(<span class="string">"123"</span>);
+<span class="keyword">if</span> (usuario) {
+  console.log(usuario.name); <span class="comment">// TypeScript sabe que usuario no es null</span>
+}
+                </div>
+
+                <div class="tip-box">
+                    <h3>🚀 Consejos Adicionales</h3>
+                    <ul>
+                        <li><strong>Habilita strict mode:</strong> Usa <code>"strict": true</code> en tsconfig.json</li>
+                        <li><strong>Documenta tipos complejos:</strong> Usa comentarios JSDoc</li>
+                        <li><strong>Evita any:</strong> Usa <code>unknown</code> cuando no sepas el tipo</li>
+                        <li><strong>Usa readonly:</strong> Para propiedades que no cambian</li>
+                        <li><strong>Agrupa tipos relacionados:</strong> En archivos .d.ts separados</li>
+                    </ul>
+                </div>
+
+                <h3>6. Ejemplo de Código Limpio</h3>
+                <div class="code-block">
+<span class="comment">// ✅ Código limpio y bien tipado</span>
+<span class="keyword">interface</span> <span class="type">ProductFilters</span> {
+  <span class="keyword">readonly</span> category?: <span class="keyword">string</span>;
+  <span class="keyword">readonly</span> minPrice?: <span class="keyword">number</span>;
+  <span class="keyword">readonly</span> maxPrice?: <span class="keyword">number</span>;
+  <span class="keyword">readonly</span> inStock?: <span class="keyword">boolean</span>;
+}
+
+<span class="keyword">type</span> <span class="type">Product</span> = {
+  <span class="keyword">readonly</span> id: <span class="keyword">string</span>;
+  <span class="keyword">readonly</span> name: <span class="keyword">string</span>;
+  <span class="keyword">readonly</span> price: <span class="keyword">number</span>;
+  <span class="keyword">readonly</span> category: <span class="keyword">string</span>;
+  <span class="keyword">readonly</span> inStock: <span class="keyword">boolean</span>;
+};
+
+<span class="comment">/**
+ * Filtra productos basado en los criterios proporcionados
+ * @param products - Lista de productos a filtrar
+ * @param filters - Criterios de filtrado opcionales
+ * @returns Array de productos filtrados
+ */</span>
+<span class="keyword">function</span> <span class="function">filterProducts</span>(
+  products: <span class="keyword">readonly</span> <span class="type">Product</span>[],
+  filters: <span class="type">ProductFilters</span> = {}
+): <span class="type">Product</span>[] {
+  <span class="keyword">return</span> products.filter(product => {
+    <span class="keyword">if</span> (filters.category && product.category !== filters.category) {
+      <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+    <span class="keyword">if</span> (filters.minPrice && product.price < filters.minPrice) {
+      <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+    <span class="keyword">if</span> (filters.maxPrice && product.price > filters.maxPrice) {
+      <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+    <span class="keyword">if</span> (filters.inStock !== <span class="keyword">undefined</span> && product.inStock !== filters.inStock) {
+      <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+    <span class="keyword">return</span> <span class="keyword">true</span>;
+  });
+}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            // Ocultar todo el contenido de tabs
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            // Remover clase active de todos los botones
+            tablinks = document.getElementsByClassName("nav-tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            // Mostrar el tab seleccionado y marcar el botón como activo
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
